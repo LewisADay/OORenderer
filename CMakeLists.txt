@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.29)
+
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
+
+set(PROJECT_NAME "OORenderer")
+set(OORENDERER_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+project(${PROJECT_NAME})
+add_library(${PROJECT_NAME})
+
+add_subdirectory("source")
+add_subdirectory("vendor")
+
+set(BUILD_TESTS ON)
+
+if (BUILD_TESTS)
+	add_subdirectory("tests")
+endif()
