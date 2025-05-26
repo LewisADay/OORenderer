@@ -6,9 +6,9 @@
 
 namespace OORenderer {
 
-	struct TestStruct {
-		int x;
-		float y;
+	class Renderer {
+	public:
+		Renderer();
+		~Renderer();
 	};
-
 }

@@ -3,5 +3,12 @@
 
 namespace OORenderer {
 
+	Renderer::Renderer() {
+		
+	}
+
+	Renderer::~Renderer() {
+
+	}
 
 }

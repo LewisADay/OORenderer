@@ -3,7 +3,9 @@ set(OORENDERER_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 set(OORENDERER_SOURCE_DIR ${OORENDERER_SOURCE_DIR} PARENT_SCOPE)
 
 target_sources(${PROJECT_NAME} PRIVATE
-	Renderer.cpp
+	"Renderer.cpp"
+	"Window.cpp"
+	"StaticRenderer.cpp"
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
