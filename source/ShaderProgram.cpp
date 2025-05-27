@@ -7,22 +7,41 @@
 
 namespace OORenderer {
 
-	ShaderProgram::ShaderProgram() {
+	ShaderProgram::ShaderProgram(std::shared_ptr<Window> window)
+		: m_Window(window)
+	{
+		GLFWwindow* oldContext = glfwGetCurrentContext();
+		window->ActivateWindow();
 		m_ProgramID = glCreateProgram();
+		Window::ActivateGLFWWindow(oldContext);
 	}
 
-	ShaderProgram::ShaderProgram(std::filesystem::path vertexShaderPath, std::filesystem::path fragmentShaderPath)
-		: ShaderProgram()
+	ShaderProgram::ShaderProgram(std::shared_ptr<Window> window, std::filesystem::path vertexShaderPath, std::filesystem::path fragmentShaderPath)
+		: ShaderProgram(window)
 	{
 		RegisterShader(vertexShaderPath, GL_VERTEX_SHADER);
 		RegisterShader(fragmentShaderPath, GL_FRAGMENT_SHADER);
+		LinkProgram();
 	}
 
 	ShaderProgram::~ShaderProgram() {
+		// Uncertain if this is necessary - seems to work without but this shouldn't be called too often
+		// (unless you're doing something odd in which case on your own head be it)
+		// Ensure we're on the correct context
+		GLFWwindow* oldContext = glfwGetCurrentContext();
+		m_Window->ActivateWindow();
+
 		glDeleteProgram(m_ProgramID);
+
+		Window::ActivateGLFWWindow(oldContext);
 	}
 
 	bool ShaderProgram::RegisterShader(const char* shaderSource, int shaderType) {
+
+		// Ensure we're on the correct context
+		GLFWwindow* oldContext = glfwGetCurrentContext();
+		m_Window->ActivateWindow();
+
 		unsigned int shaderID = glCreateShader(shaderType);
 		glShaderSource(shaderID, 1, &shaderSource, NULL);
 		glCompileShader(shaderID);
@@ -35,10 +54,16 @@ namespace OORenderer {
 		{
 			glGetShaderInfoLog(shaderID, 512, NULL, infoLog);
 			std::cerr << "ERROR::SHADER::" << shaderType << "::COMPILATION_FAILED\n" << infoLog << std::endl; // TODO LOGGING
+			// Revert context
+			Window::ActivateGLFWWindow(oldContext);
 			return false;
 		}
 
 		glAttachShader(m_ProgramID, shaderID);
+		m_RegisteredShaders[shaderType] = shaderID;
+
+		// Revert context
+		Window::ActivateGLFWWindow(oldContext);
 		return true;
 	}
 
@@ -52,11 +77,20 @@ namespace OORenderer {
 		std::string fileContents(std::filesystem::file_size(shaderPath), '\0');
 		shaderFile.read(fileContents.data(), fileContents.size());
 
-		RegisterShader(fileContents.c_str(), shaderType);
-		return true;
+		return RegisterShader(fileContents.c_str(), shaderType);
 	}
 
 	void ShaderProgram::LinkProgram() {
+
+		// Ensure we're on the correct context
+		GLFWwindow* oldContext = glfwGetCurrentContext();
+		m_Window->ActivateWindow();
+
+		for (auto& [type, id] : m_RegisteredShaders) {
+			glAttachShader(m_ProgramID, id);
+			std::cout << "Attaching shader of type: " << type << " with ID: " << id << std::endl; // TODO LOGGING
+		}
+
 		glLinkProgram(m_ProgramID);
 
 		int  success;
@@ -71,10 +105,21 @@ namespace OORenderer {
 		for (auto& [type, id] : m_RegisteredShaders) {
 			glDeleteShader(id);
 		}
+
+		// Revert context
+		Window::ActivateGLFWWindow(oldContext);
 	}
 
 	void ShaderProgram::UseProgram() {
+		// We permit enabling a shaderprogram for a different context than the active context
+		// Ensure we're on the correct context
+		GLFWwindow* oldContext = glfwGetCurrentContext();
+		m_Window->ActivateWindow();
+
 		glUseProgram(m_ProgramID);
+
+		// Revert context
+		Window::ActivateGLFWWindow(oldContext);
 	}
 
 } // OOrenderer

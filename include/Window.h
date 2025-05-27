@@ -6,7 +6,7 @@
 namespace OORenderer {
 
 	class Window {
-	public:
+	public: // Ctors and Dtors
 		Window(
 			int width,
 			int height,
@@ -17,7 +17,10 @@ namespace OORenderer {
 		);
 		~Window();
 
+	public: // Public Static methods
+		static void ActivateGLFWWindow(GLFWwindow* window);
 
+	public: // Public methods
 		void ActivateWindow();
 		bool IsActiveWindow();
 		void SetFocused();
@@ -37,12 +40,12 @@ namespace OORenderer {
 		GLFWwindowfocusfun RegisterFocusCallback(GLFWwindowfocusfun callback);
 		GLFWwindow* GetGLFWWindow();
 
-	protected:
+	protected: // Protected methods
 		void FramebufferSizeCallback(int width, int height);
 		void FocusCallback(int focused);
 		void KeyCallback(int key, int scancode, int action, int mods);
 
-	private:
+	private: // Private members
 		int m_Width;
 		int m_Height;
 		GLFWwindow* m_GLFWWindow;

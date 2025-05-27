@@ -13,6 +13,7 @@ namespace OORenderer {
 			// TODO LOGGING
 			return nullptr;
 		}
+		return user;
 	}
 
 	static void StaticFramebufferSizeCallback(GLFWwindow* window, int width, int height) {
@@ -151,9 +152,14 @@ namespace OORenderer {
 		}
 	}
 
-	void Window::ActivateWindow() {
+	void Window::ActivateGLFWWindow(GLFWwindow* window) {
+		// Already active?
+		if (window == glfwGetCurrentContext()) {
+			return;
+		}
+
 		// Activate this glfw context
-		glfwMakeContextCurrent(m_GLFWWindow);
+		glfwMakeContextCurrent(window);
 
 		// Bind glad to this glfw context
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -161,7 +167,13 @@ namespace OORenderer {
 		}
 
 		// Size the viewport appropriately
-		glViewport(0, 0, m_Width, m_Height);
+		int width, height;
+		glfwGetWindowSize(window, &width, &height);
+		glViewport(0, 0, width, height);
+	}
+	
+	void Window::ActivateWindow() {
+		ActivateGLFWWindow(m_GLFWWindow);
 	}
 
 	bool Window::IsActiveWindow() {
