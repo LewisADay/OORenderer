@@ -14,14 +14,38 @@ namespace OORenderer {
 		ShaderProgram(std::shared_ptr<Window> window, std::filesystem::path vertexShaderPath, std::filesystem::path fragmentShaderPath);
 		~ShaderProgram();
 
+		/// <summary>
+		/// Compile shader from source and register it with this shader program
+		/// Remember to link the program after all shaders have been registered
+		/// </summary>
+		/// <param name="shaderSource">Shader source code. N.B. Not a path</param>
+		/// <param name="shaderType">OpenGL macro for which type of shader this is</param>
+		/// <returns>True if successful, false otherwise</returns>
 		bool RegisterShader(const char* shaderSource, int shaderType);
+
+		/// <summary>
+		/// Load shader source from path, compile, and register that shader with this shader program
+		/// Remember to link the program after all shaders have been registered
+		/// </summary>
+		/// <param name="shaderPath">Path to shader source file</param>
+		/// <param name="shaderType">OpenGL macro for which type of shader this is</param>
+		/// <returns>True if successful, false otherwise</returns>
 		bool RegisterShader(std::filesystem::path shaderPath, int shaderType);
 
+		/// <summary>
+		/// Link the registered shaders together creating the complete program ready to be used
+		/// </summary>
 		void LinkProgram();
 
+		/// <summary>
+		/// Enable this program for use, call before submitting draw calls you wish to use this shader program
+		/// </summary>
 		void UseProgram();
 
-		// Uniforms
+
+		// These uniforms call the OpenGL uniform equivalents arrays of vectors and matrices are not currently supported
+		// that is, OpenGL count values are hardcoded. E.g. SetUniformMatrix4fv assumes only 1 matrix is being set.
+
 		void SetUniform1f(const GLchar* uniformName, const float v0);
 		void SetUniform2f(const GLchar* uniformName, const float v0, const float v1);
 		void SetUniform3f(const GLchar* uniformName, const float v0, const float v1, const float v2);
@@ -64,6 +88,14 @@ namespace OORenderer {
 		void SetUniformMatrix4x3fv(const GLchar* uniformName, const float* value, const bool transpose = false);
 
 	private: // Private methods
+
+		/// <summary>
+		/// Set a given uniform for this program using a given OpenGL function and appropriate arguments
+		/// </summary>
+		/// <typeparam name="...TArgs">Pack of types of the user arguments to be passed to the OpenGL function</typeparam>
+		/// <param name="uniformName">Name of uniform to set</param>
+		/// <param name="oglUniformFunction">OpenGL uniform function to use to set the value, see: https://registry.khronos.org/OpenGL-Refpages/gl4/html/glUniform.xhtml</param>
+		/// <param name="...args">Arguments to pass to the OpenGL uniform function</param>
 		template<typename... TArgs>
 		void SetUniformHelper(const GLchar* uniformName, void (*oglUniformFunction)(GLint, TArgs...), TArgs... args);
 

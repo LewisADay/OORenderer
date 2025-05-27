@@ -101,6 +101,8 @@ namespace OORenderer {
 		m_Height = height;
 
 		// Size the viewport appropriately
+		int widthPx, heightPx;
+		glfwGetFramebufferSize(m_GLFWWindow, &widthPx, &heightPx);
 		glViewport(0, 0, width, height);
 
 		if (m_ExternFramebufferResizeCallback) {
@@ -168,7 +170,7 @@ namespace OORenderer {
 
 		// Size the viewport appropriately
 		int width, height;
-		glfwGetWindowSize(window, &width, &height);
+		glfwGetFramebufferSize(window, &width, &height);
 		glViewport(0, 0, width, height);
 	}
 	
