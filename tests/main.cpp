@@ -4,6 +4,7 @@
 
 #include <Renderer.h>
 #include <Window.h>
+#include <ShaderProgram.h>
 
 OORenderer::Window window1{ 800, 600 };
 OORenderer::Window window2{ 800, 600 };
@@ -24,6 +25,11 @@ int main()
 
 	window1.RegisterKeyCallback(InputCallback);
 	window2.RegisterKeyCallback(InputCallback);
+
+	ShaderProgram shaderProgram{
+		"./resources/shaders/vertShader.vs",
+		"./resources/shaders/fragShader.fs"
+	};
 
 	while (!window1.ShouldClose() && !window2.ShouldClose()) {
 

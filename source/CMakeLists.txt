@@ -6,6 +6,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	"Renderer.cpp"
 	"Window.cpp"
 	"StaticRenderer.cpp"
+	"ShaderProgram.cpp"
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
