@@ -58,10 +58,11 @@ int SetupBuffers() {
 
 int main()
 {
-	// Uniform support
+	// Roadmap
 	// Start on RenderComponent designed to be a member in a calling entity
-	// can create SpriteRenderComponent also for ease
-	// Assume one VAO per render component for now batch rendering can come later
+	//	can create SpriteRenderComponent also for ease
+	//	Assume one VAO per render component for now batch rendering can come later
+	// Uniform Buffer Object support
 
 	using namespace OORenderer;
 
