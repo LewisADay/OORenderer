@@ -58,6 +58,11 @@ int SetupBuffers() {
 
 int main()
 {
+	// Uniform support
+	// Start on RenderComponent designed to be a member in a calling entity
+	// can create SpriteRenderComponent also for ease
+	// Assume one VAO per render component for now batch rendering can come later
+
 	using namespace OORenderer;
 
 	auto window1 = std::make_shared<Window>(800, 600);
@@ -74,6 +79,7 @@ int main()
 
 	shaderProgram1.LinkProgram();
 
+
 	// Simple construction
 	ShaderProgram shaderProgram2{ window2, "./resources/shaders/vertShader.vs", "./resources/shaders/fragShader.fs" };
 
@@ -86,13 +92,18 @@ int main()
 
 	while (!window1->ShouldClose() && !window2->ShouldClose()) {
 
+		float timeValue = glfwGetTime();
+		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+
 		window1->ActivateWindow();
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		shaderProgram1.SetUniform4f("uniformInColour", 0.5, greenValue, 0.5, 1.0);
 		shaderProgram1.UseProgram();
+
 		glBindVertexArray(VAO1);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
@@ -107,6 +118,8 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shaderProgram2.UseProgram();
+		shaderProgram2.SetUniform4f("uniformInColour", 0.0, greenValue, 1.0, 1.0);
+
 		glBindVertexArray(VAO2);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
