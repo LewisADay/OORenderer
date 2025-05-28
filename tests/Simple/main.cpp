@@ -58,11 +58,7 @@ int SetupBuffers() {
 
 int main()
 {
-	// Roadmap
-	// Start on RenderComponent designed to be a member in a calling entity
-	//	can create SpriteRenderComponent also for ease
-	//	Assume one VAO per render component for now batch rendering can come later
-	// Uniform Buffer Object support
+	std::filesystem::path testShaderResourcesPath{"./resources/shaders/simple"};
 
 	using namespace OORenderer;
 
@@ -75,15 +71,14 @@ int main()
 	// Advanced construction arbitrary shader stages as supported by OpenGL
 	ShaderProgram shaderProgram1{ window1 };
 
-	shaderProgram1.RegisterShader(std::filesystem::path("./resources/shaders/vertShader.vs"), GL_VERTEX_SHADER);
-	shaderProgram1.RegisterShader(std::filesystem::path("./resources/shaders/fragShader.fs"), GL_FRAGMENT_SHADER);
+	shaderProgram1.RegisterShader(testShaderResourcesPath / "vertShader.vs", GL_VERTEX_SHADER);
+	shaderProgram1.RegisterShader(testShaderResourcesPath / "fragShader.fs", GL_FRAGMENT_SHADER);
 
 	shaderProgram1.LinkProgram();
 
 
 	// Simple construction
-	ShaderProgram shaderProgram2{ window2, "./resources/shaders/vertShader.vs", "./resources/shaders/fragShader.fs" };
-
+	ShaderProgram shaderProgram2{ window2, testShaderResourcesPath / "vertShader.vs", testShaderResourcesPath / "fragShader.fs" };
 
 	// We need to be on the correct context when we build the buffers
 	window1.ActivateWindow();
