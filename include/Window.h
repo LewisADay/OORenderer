@@ -46,7 +46,7 @@ namespace OORenderer {
 		/// Determine if this window is the currently active GLFW context
 		/// </summary>
 		/// <returns>True if so, false otherwise</returns>
-		bool IsActiveWindow();
+		bool IsActiveWindow() const;
 
 		/// <summary>
 		/// Set this window to be in focus (bring to foreground and take inputs)
@@ -58,13 +58,13 @@ namespace OORenderer {
 		/// Determine if this window is currently focused
 		/// </summary>
 		/// <returns>True if so, false otherwise</returns>
-		bool IsFocused();
+		bool IsFocused() const;
 
 		/// <summary>
 		/// Determine if this window should close
 		/// </summary>
 		/// <returns>True if so, false otherwise</returns>
-		bool ShouldClose();
+		bool ShouldClose() const;
 
 		/// <summary>
 		/// Request that this window close
@@ -86,14 +86,14 @@ namespace OORenderer {
 		/// To get width in pixels please see glfwGetFramebufferSize.
 		/// </summary>
 		/// <returns>Current width in screen space terms</returns>
-		int GetWidth();
+		int GetWidth() const;
 
 		/// <summary>
 		/// Get this windows current height
 		/// To get height in pixels please see glfwGetFramebufferSize.
 		/// </summary>
 		/// <returns>Current height in screen space terms</returns>
-		int GetHeight();
+		int GetHeight() const;
 
 		/// <summary>
 		/// Register your own callback to be called when the framebuffer resizes
@@ -123,7 +123,7 @@ namespace OORenderer {
 		/// Get the GLFW window this window wraps - use with caution
 		/// </summary>
 		/// <returns>GLFW window this window wraps</returns>
-		GLFWwindow* GetGLFWWindow();
+		GLFWwindow* GetGLFWWindow() const;
 
 	protected: // Protected methods
 		void FramebufferSizeCallback(int width, int height);

@@ -10,8 +10,8 @@ namespace OORenderer {
 
 	class ShaderProgram {
 	public:
-		ShaderProgram(std::shared_ptr<Window> window);
-		ShaderProgram(std::shared_ptr<Window> window, std::filesystem::path vertexShaderPath, std::filesystem::path fragmentShaderPath);
+		ShaderProgram(const Window& window);
+		ShaderProgram(const Window& window, std::filesystem::path vertexShaderPath, std::filesystem::path fragmentShaderPath);
 		~ShaderProgram();
 
 		/// <summary>
@@ -103,7 +103,7 @@ namespace OORenderer {
 		int m_ProgramID;
 
 		// We have to register the program to a particular window
-		std::shared_ptr<Window> m_Window;
+		GLFWwindow* m_Window;
 
 		// Map from shader type e.g. GL_VERTEX_SHADER to shader ID
 		std::map<int, unsigned int> m_RegisteredShaders;

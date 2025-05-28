@@ -8,7 +8,7 @@ namespace OORenderer {
 		// We permit setting a uniform for a shader program in a different context than the active context
 		// Ensure we're on the correct context
 		GLFWwindow* oldContext = glfwGetCurrentContext();
-		m_Window->ActivateWindow();
+		Window::ActivateGLFWWindow(m_Window);
 
 		GLint uniformLocation = glGetUniformLocation(m_ProgramID, uniformName);
 		glUseProgram(m_ProgramID);

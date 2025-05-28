@@ -178,7 +178,7 @@ namespace OORenderer {
 		ActivateGLFWWindow(m_GLFWWindow);
 	}
 
-	bool Window::IsActiveWindow() {
+	bool Window::IsActiveWindow() const {
 		return m_GLFWWindow == glfwGetCurrentContext();
 	}
 
@@ -186,15 +186,15 @@ namespace OORenderer {
 		glfwFocusWindow(m_GLFWWindow);
 	}
 
-	bool Window::IsFocused() {
+	bool Window::IsFocused() const {
 		return glfwGetWindowAttrib(m_GLFWWindow, GLFW_FOCUSED);
 	}
 
-	GLFWwindow* Window::GetGLFWWindow() {
+	GLFWwindow* Window::GetGLFWWindow() const {
 		return m_GLFWWindow;
 	}
 
-	bool Window::ShouldClose() {
+	bool Window::ShouldClose() const {
 		return glfwWindowShouldClose(m_GLFWWindow);
 	}
 
@@ -210,11 +210,11 @@ namespace OORenderer {
 		glfwRequestWindowAttention(m_GLFWWindow);
 	}
 
-	int Window::GetWidth() {
+	int Window::GetWidth() const {
 		return m_Width;
 	}
 
-	int Window::GetHeight() {
+	int Window::GetHeight() const {
 		return m_Height;
 	}
 
