@@ -66,13 +66,13 @@ int main()
 
 	using namespace OORenderer;
 
-	auto window1 = std::make_shared<Window>(800, 600);
-	auto window2 = std::make_shared<Window>(800, 600);
+	Window window1{800, 600};
+	Window window2{800, 600};
 
-	window1->RegisterKeyCallback(InputCallback);
-	window2->RegisterKeyCallback(InputCallback);
+	window1.RegisterKeyCallback(InputCallback);
+	window2.RegisterKeyCallback(InputCallback);
 
-	// Advanced construction 9arbitrary shader stages as supported by OpenGL
+	// Advanced construction arbitrary shader stages as supported by OpenGL
 	ShaderProgram shaderProgram1{ window1 };
 
 	shaderProgram1.RegisterShader(std::filesystem::path("./resources/shaders/vertShader.vs"), GL_VERTEX_SHADER);
@@ -86,17 +86,17 @@ int main()
 
 
 	// We need to be on the correct context when we build the buffers
-	window1->ActivateWindow();
+	window1.ActivateWindow();
 	unsigned int VAO1 = SetupBuffers();
-	window2->ActivateWindow();
+	window2.ActivateWindow();
 	unsigned int VAO2 = SetupBuffers();
 
-	while (!window1->ShouldClose() && !window2->ShouldClose()) {
+	while (!window1.ShouldClose() && !window2.ShouldClose()) {
 
 		float timeValue = glfwGetTime();
 		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
 
-		window1->ActivateWindow();
+		window1.ActivateWindow();
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -108,11 +108,11 @@ int main()
 		glBindVertexArray(VAO1);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		window1->UpdateDisplay();
+		window1.UpdateDisplay();
 
 
 
-		window2->ActivateWindow();
+		window2.ActivateWindow();
 
 		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 		glClearColor(1.0, 0.0f, 0.0f, 1.0f);
@@ -124,7 +124,7 @@ int main()
 		glBindVertexArray(VAO2);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		window2->UpdateDisplay();
+		window2.UpdateDisplay();
 
 		glfwPollEvents();
 	}

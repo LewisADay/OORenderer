@@ -7,16 +7,16 @@
 
 namespace OORenderer {
 
-	ShaderProgram::ShaderProgram(std::shared_ptr<Window> window)
-		: m_Window(window)
+	ShaderProgram::ShaderProgram(const Window& window)
+		: m_Window(window.GetGLFWWindow())
 	{
 		GLFWwindow* oldContext = glfwGetCurrentContext();
-		window->ActivateWindow();
+		Window::ActivateGLFWWindow(m_Window);
 		m_ProgramID = glCreateProgram();
 		Window::ActivateGLFWWindow(oldContext);
 	}
 
-	ShaderProgram::ShaderProgram(std::shared_ptr<Window> window, std::filesystem::path vertexShaderPath, std::filesystem::path fragmentShaderPath)
+	ShaderProgram::ShaderProgram(const Window& window, std::filesystem::path vertexShaderPath, std::filesystem::path fragmentShaderPath)
 		: ShaderProgram(window)
 	{
 		RegisterShader(vertexShaderPath, GL_VERTEX_SHADER);
@@ -29,7 +29,7 @@ namespace OORenderer {
 		// (unless you're doing something odd in which case on your own head be it)
 		// Ensure we're on the correct context
 		GLFWwindow* oldContext = glfwGetCurrentContext();
-		m_Window->ActivateWindow();
+		Window::ActivateGLFWWindow(m_Window);
 
 		glDeleteProgram(m_ProgramID);
 
@@ -40,7 +40,7 @@ namespace OORenderer {
 
 		// Ensure we're on the correct context
 		GLFWwindow* oldContext = glfwGetCurrentContext();
-		m_Window->ActivateWindow();
+		Window::ActivateGLFWWindow(m_Window);
 
 		unsigned int shaderID = glCreateShader(shaderType);
 		glShaderSource(shaderID, 1, &shaderSource, NULL);
@@ -84,7 +84,7 @@ namespace OORenderer {
 
 		// Ensure we're on the correct context
 		GLFWwindow* oldContext = glfwGetCurrentContext();
-		m_Window->ActivateWindow();
+		Window::ActivateGLFWWindow(m_Window);
 
 		for (auto& [type, id] : m_RegisteredShaders) {
 			glAttachShader(m_ProgramID, id);
@@ -114,7 +114,7 @@ namespace OORenderer {
 		// We permit enabling a shader program for a different context than the active context
 		// Ensure we're on the correct context
 		GLFWwindow* oldContext = glfwGetCurrentContext();
-		m_Window->ActivateWindow();
+		Window::ActivateGLFWWindow(m_Window);
 
 		glUseProgram(m_ProgramID);
 
