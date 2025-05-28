@@ -72,7 +72,7 @@ int main()
 	window1.RegisterKeyCallback(InputCallback);
 	window2.RegisterKeyCallback(InputCallback);
 
-	// Advanced construction 9arbitrary shader stages as supported by OpenGL
+	// Advanced construction arbitrary shader stages as supported by OpenGL
 	ShaderProgram shaderProgram1{ window1 };
 
 	shaderProgram1.RegisterShader(std::filesystem::path("./resources/shaders/vertShader.vs"), GL_VERTEX_SHADER);
