@@ -15,8 +15,8 @@ add_library(${PROJECT_NAME})
 add_subdirectory("source")
 add_subdirectory("vendor")
 
-set(BUILD_TESTS ON)
+set(BUILD_EXAMPLES ON)
 
-if (BUILD_TESTS)
-	add_subdirectory("tests")
+if (BUILD_EXAMPLES)
+	add_subdirectory("examples")
 endif()
