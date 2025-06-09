@@ -5,6 +5,7 @@
 #include <Renderer.h>
 #include <Window.h>
 #include <ShaderProgram.h>
+#include <Texture.h>
 
 
 void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
@@ -17,10 +18,11 @@ void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mo
 /// <returns>ID of VAO we've setup</returns>
 int SetupBuffers() {
 	float vertices[] = {
-	 0.5f,  0.5f, 0.0f,  // top right
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	-0.5f, -0.5f, 0.0f,  // bottom left
-	-0.5f,  0.5f, 0.0f   // top left 
+		// positions          // colors           // texture coords
+		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
 	};
 	unsigned int indices[] = {  // note that we start from 0!
 		0, 1, 3,   // first triangle
@@ -40,8 +42,15 @@ int SetupBuffers() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	// position attribute
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
+	// color attribute
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
+	// texture coord attribute
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 
 	// note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -58,7 +67,14 @@ int SetupBuffers() {
 
 int main()
 {
-	std::filesystem::path testShaderResourcesPath{"./resources/shaders/simple"};
+	std::cout << "Vertex Shader Enum: " << GL_VERTEX_SHADER << std::endl;
+	std::cout << "Frag Shader Enum: " << GL_FRAGMENT_SHADER << std::endl;
+
+	std::filesystem::path texturePath1{ "./resources/textures/container.jpg" };
+	std::filesystem::path texturePath2{ "./resources/textures/wall.jpg" };
+	std::filesystem::path shadersPath{"./resources/shaders/textures"};
+	std::string vertexShader = "vertShader.vs";
+	std::string fragShader = "fragShader.fs";
 
 	using namespace OORenderer;
 
@@ -71,20 +87,24 @@ int main()
 	// Advanced construction arbitrary shader stages as supported by OpenGL
 	ShaderProgram shaderProgram1{ window1 };
 
-	shaderProgram1.RegisterShader(testShaderResourcesPath / "vertShader.vs", GL_VERTEX_SHADER);
-	shaderProgram1.RegisterShader(testShaderResourcesPath / "fragShader.fs", GL_FRAGMENT_SHADER);
+	shaderProgram1.RegisterShader(shadersPath / vertexShader, GL_VERTEX_SHADER);
+	shaderProgram1.RegisterShader(shadersPath / fragShader, GL_FRAGMENT_SHADER);
 
 	shaderProgram1.LinkProgram();
 
 
 	// Simple construction
-	ShaderProgram shaderProgram2{ window2, testShaderResourcesPath / "vertShader.vs", testShaderResourcesPath / "fragShader.fs" };
+	ShaderProgram shaderProgram2{ window2, shadersPath / vertexShader, shadersPath / fragShader };
 
 	// We need to be on the correct context when we build the buffers
 	window1.ActivateWindow();
 	unsigned int VAO1 = SetupBuffers();
 	window2.ActivateWindow();
 	unsigned int VAO2 = SetupBuffers();
+
+	// Setup textures
+	Texture texture1{ window1, texturePath1 };
+	Texture texture2{ window2, texturePath2 };
 
 	while (!window1.ShouldClose() && !window2.ShouldClose()) {
 
@@ -93,11 +113,10 @@ int main()
 
 		window1.ActivateWindow();
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+		glBindTexture(GL_TEXTURE_2D, texture1.GetTextureID());
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		shaderProgram1.SetUniform4f("uniformInColour", 0.5, greenValue, 0.5, 1.0);
 		shaderProgram1.UseProgram();
 
 		glBindVertexArray(VAO1);
@@ -109,12 +128,11 @@ int main()
 
 		window2.ActivateWindow();
 
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+		glBindTexture(GL_TEXTURE_2D, texture2.GetTextureID());
 		glClearColor(1.0, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shaderProgram2.UseProgram();
-		shaderProgram2.SetUniform4f("uniformInColour", 0.0, greenValue, 1.0, 1.0);
 
 		glBindVertexArray(VAO2);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
