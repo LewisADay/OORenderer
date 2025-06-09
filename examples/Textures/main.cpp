@@ -72,14 +72,14 @@ int main()
 
 	std::filesystem::path texturePath1{ "./resources/textures/container.jpg" };
 	std::filesystem::path texturePath2{ "./resources/textures/wall.jpg" };
-	std::filesystem::path shadersPath{"./resources/shaders/textures"};
+	std::filesystem::path shadersPath{ "./resources/shaders/textures" };
 	std::string vertexShader = "vertShader.vs";
 	std::string fragShader = "fragShader.fs";
 
 	using namespace OORenderer;
 
-	Window window1{800, 600};
-	Window window2{800, 600};
+	Window window1{ 800, 600 };
+	Window window2{ 800, 600 };
 
 	window1.RegisterKeyCallback(InputCallback);
 	window2.RegisterKeyCallback(InputCallback);

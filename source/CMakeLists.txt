@@ -5,7 +5,6 @@ set(OORENDERER_SOURCE_DIR ${OORENDERER_SOURCE_DIR} PARENT_SCOPE)
 target_sources(${PROJECT_NAME} PRIVATE
 	"Renderer.cpp"
 	"Window.cpp"
-	"StaticRenderer.cpp"
 	"ShaderProgram.cpp"
 	"ShaderProgram_Uniforms.cpp"
 	"Texture.cpp"

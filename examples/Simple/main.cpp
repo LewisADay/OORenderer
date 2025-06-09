@@ -58,14 +58,14 @@ int SetupBuffers() {
 
 int main()
 {
-	std::filesystem::path shadersPath{"./resources/shaders/simple"};
+	std::filesystem::path shadersPath{ "./resources/shaders/simple" };
 	std::string vertexShader = "vertShader.vs";
 	std::string fragShader = "fragShader.fs";
 
 	using namespace OORenderer;
 
-	Window window1{800, 600};
-	Window window2{800, 600};
+	Window window1{ 800, 600 };
+	Window window2{ 800, 600 };
 
 	window1.RegisterKeyCallback(InputCallback);
 	window2.RegisterKeyCallback(InputCallback);
