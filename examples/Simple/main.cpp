@@ -58,7 +58,9 @@ int SetupBuffers() {
 
 int main()
 {
-	std::filesystem::path testShaderResourcesPath{"./resources/shaders/simple"};
+	std::filesystem::path shadersPath{"./resources/shaders/simple"};
+	std::string vertexShader = "vertShader.vs";
+	std::string fragShader = "fragShader.fs";
 
 	using namespace OORenderer;
 
@@ -71,14 +73,14 @@ int main()
 	// Advanced construction arbitrary shader stages as supported by OpenGL
 	ShaderProgram shaderProgram1{ window1 };
 
-	shaderProgram1.RegisterShader(testShaderResourcesPath / "vertShader.vs", GL_VERTEX_SHADER);
-	shaderProgram1.RegisterShader(testShaderResourcesPath / "fragShader.fs", GL_FRAGMENT_SHADER);
+	shaderProgram1.RegisterShader(shadersPath / vertexShader, GL_VERTEX_SHADER);
+	shaderProgram1.RegisterShader(shadersPath / fragShader, GL_FRAGMENT_SHADER);
 
 	shaderProgram1.LinkProgram();
 
 
 	// Simple construction
-	ShaderProgram shaderProgram2{ window2, testShaderResourcesPath / "vertShader.vs", testShaderResourcesPath / "fragShader.fs" };
+	ShaderProgram shaderProgram2{ window2, shadersPath / vertexShader, shadersPath / fragShader };
 
 	// We need to be on the correct context when we build the buffers
 	window1.ActivateWindow();
