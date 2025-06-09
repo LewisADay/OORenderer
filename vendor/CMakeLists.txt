@@ -12,3 +12,5 @@ set(GLFW_DIR "${VENDOR_DIR}/${GLFW_DIR}" PARENT_SCOPE)
 add_subdirectory(${GLFW_DIR})
 target_link_libraries(${PROJECT_NAME} PUBLIC glfw)
 target_include_directories(${PROJECT_NAME} PUBLIC "${GLFW_DIR}/include")
+
+target_include_directories(${PROJECT_NAME} PUBLIC "stb_image")
