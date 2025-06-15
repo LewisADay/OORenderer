@@ -8,6 +8,7 @@ target_sources(${PROJECT_NAME} PRIVATE
 	"ShaderProgram.cpp"
 	"ShaderProgram_Uniforms.cpp"
 	"Texture.cpp"
+	"Camera.cpp"
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE
