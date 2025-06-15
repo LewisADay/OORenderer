@@ -150,4 +150,28 @@ namespace OORenderer {
 		SetUniformHelper(uniformName, glUniformMatrix4x3fv, (GLint)1, (GLboolean)transpose, value);
 	}
 
+	void ShaderProgram::SetUniform2fv(const GLchar* uniformName, const glm::vec2* value) {
+		SetUniform2fv(uniformName, &value[0]);
+	}
+
+	void ShaderProgram::SetUniform3fv(const GLchar* uniformName, const glm::vec3* value) {
+		SetUniform3fv(uniformName, &value[0]);
+	}
+
+	void ShaderProgram::SetUniform4fv(const GLchar* uniformName, const glm::vec4* value) {
+		SetUniform4fv(uniformName, &value[0]);
+	}
+
+	void ShaderProgram::SetUniformMatrix2fv(const GLchar* uniformName, const glm::mat2& value, const bool transpose) {
+		SetUniformMatrix2fv(uniformName, &value[0][0], transpose);
+	}
+
+	void ShaderProgram::SetUniformMatrix3fv(const GLchar* uniformName, const glm::mat3& value, const bool transpose) {
+		SetUniformMatrix3fv(uniformName, &value[0][0], transpose);
+	}
+
+	void ShaderProgram::SetUniformMatrix4fv(const GLchar* uniformName, const glm::mat4& value, const bool transpose) {
+		SetUniformMatrix4fv(uniformName, &value[0][0], transpose);
+	}
+
 } // OORenderer
