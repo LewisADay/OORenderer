@@ -93,9 +93,9 @@ namespace OORenderer {
 		void SetUniformMatrix4x3fv(const GLchar* uniformName, const float* value, const bool transpose = false);
 
 		// glm type overloads
-		void SetUniform2fv(const GLchar* uniformName, const glm::vec2* value);
-		void SetUniform3fv(const GLchar* uniformName, const glm::vec3* value);
-		void SetUniform4fv(const GLchar* uniformName, const glm::vec4* value);
+		void SetUniform2fv(const GLchar* uniformName, const glm::vec2& value);
+		void SetUniform3fv(const GLchar* uniformName, const glm::vec3& value);
+		void SetUniform4fv(const GLchar* uniformName, const glm::vec4& value);
 
 		void SetUniformMatrix2fv(const GLchar* uniformName, const glm::mat2& value, const bool transpose = false);
 		void SetUniformMatrix3fv(const GLchar* uniformName, const glm::mat3& value, const bool transpose = false);
