@@ -122,4 +122,8 @@ namespace OORenderer {
 		Window::ActivateGLFWWindow(oldContext);
 	}
 
+	GLFWwindow* ShaderProgram::GetGLFWWindow() const {
+		return m_Window;
+	}
+
 } // OOrenderer

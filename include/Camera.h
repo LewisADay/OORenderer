@@ -26,6 +26,11 @@ namespace OORenderer {
 		void MoveTo(glm::vec3 position);
 		void Move(glm::vec3 displacement);
 
+		void MoveForward(float distance);
+		void MoveBackward(float distance);
+		void MoveLeft(float distance);
+		void MoveRight(float distance);
+
 		void SetProjectionOrthographic(float left, float right, float bottom, float top, float near, float far);
 		void SetProjectionPerspective(float fovRads, float aspectRatio, float near, float far);
 

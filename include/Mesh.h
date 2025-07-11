@@ -7,6 +7,7 @@
 #include <glm/glm.hpp>
 
 #include "ShaderProgram.h"
+#include "Texture.h"
 
 namespace OORenderer {
 
@@ -22,18 +23,19 @@ namespace OORenderer {
 
 	public: // Public methods
 
-		Mesh(const Window& window, std::vector<Vertex> vertexData, std::vector<unsigned int> indices, std::map<std::string, unsigned int> textureBindingMap);
-		void Render(ShaderProgram& shader);
+		Mesh(std::vector<Vertex> vertexData, std::vector<unsigned int> indices, std::map<std::string, std::shared_ptr<Texture>> textureBindingMap);
+		Mesh(const Window& window, std::vector<Vertex> vertexData, std::vector<unsigned int> indices, std::map<std::string, std::shared_ptr<Texture>> textureBindingMap);
+		void Render(ShaderProgram& shader) const;
+		void RegisterOnGLFWWindow(GLFWwindow* window);
+		void RegisterOnWindow(const Window& window);
 
 	private:
-		// We have to register the mesh to a particular opengl viewport
-		GLFWwindow* m_Window;
+		// For each window this mesh is registered on, return the VAO ID associated with this mesh
+		std::map<GLFWwindow*, unsigned int> m_WindowVAOIDMap{};
 
 		std::vector<Vertex> m_VertexData;
 		std::vector<unsigned int> m_Indices;
-		std::map<std::string, unsigned int> m_TextureBindingMap;
-
-		unsigned int m_VAOID;
+		std::map<std::string, std::shared_ptr<Texture>> m_TextureBindingMap;
 	};
 
 } // OORenderer

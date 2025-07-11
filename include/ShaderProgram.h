@@ -47,6 +47,12 @@ namespace OORenderer {
 		/// </summary>
 		void UseProgram();
 
+		/// <summary>
+		/// Get the GLFW context this shader program is bound to
+		/// </summary>
+		/// <returns>Pointer to the GLFW window this shader program is bound to</returns>
+		GLFWwindow* GetGLFWWindow() const;
+
 
 		// These uniforms call the OpenGL uniform equivalents arrays of vectors and matrices are not currently supported
 		// that is, OpenGL count values are hardcoded. E.g. SetUniformMatrix4fv assumes only 1 matrix is being set.
