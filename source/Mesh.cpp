@@ -25,7 +25,8 @@ namespace OORenderer {
         auto VAOIDIt = m_WindowVAOIDMap.find(renderWindow);
         if (VAOIDIt == m_WindowVAOIDMap.end()) {
             // TODO Logging
-            std::cerr << "Attempting to render mesh using shader registered to a window this mesh hasn't been loaded to." << std::endl;;
+            std::cerr << "Attempting to render mesh using shader registered to a window this mesh hasn't been loaded to." << std::endl;
+            return;
         }
 
         GLFWwindow* oldContext = glfwGetCurrentContext();

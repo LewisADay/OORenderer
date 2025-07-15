@@ -21,6 +21,14 @@ namespace OORenderer {
 
 	void Model::RegisterOnGLFWWindow(GLFWwindow* window) {
 
+		if (!m_RegisteredWindows.empty()) {
+			auto registeredIt = std::ranges::find(m_RegisteredWindows, window);
+			if (registeredIt != m_RegisteredWindows.end()) {
+				return;
+			}
+		}
+		m_RegisteredWindows.push_back(window);
+
 		// Register textures on correct context
 		for (auto& texture : sm_LoadedTextures) {
 			texture->BindToWindow(window);

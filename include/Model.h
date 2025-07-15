@@ -51,6 +51,7 @@ namespace OORenderer {
 	private: // Private Members
 		std::vector<Mesh> m_Meshes;
 		std::filesystem::path m_ModelDirectory;
+		std::vector<GLFWwindow*> m_RegisteredWindows;
 
 		std::vector<std::shared_ptr<Texture>> m_DiffuseMaps;
 		std::vector<std::shared_ptr<Texture>> m_SpecularMaps;
