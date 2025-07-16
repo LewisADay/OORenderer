@@ -34,7 +34,7 @@ namespace OORenderer {
 		glm::mat4 m_ModelMatrix = 1.0f; // Identity
 
 	private: // Private static members
-		static std::map<std::filesystem::path, std::shared_ptr<Model>> sm_LoadedModels;
+		inline static std::map<std::filesystem::path, std::shared_ptr<Model>> sm_LoadedModels{};
 	};
 
 } // OORenderer

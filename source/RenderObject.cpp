@@ -3,9 +3,6 @@
 
 namespace OORenderer {
 
-	// Init static members
-	std::map<std::filesystem::path, std::shared_ptr<Model>> RenderObject::sm_LoadedModels{};
-
 	RenderObject::RenderObject(std::shared_ptr<Model> model, std::shared_ptr<ShaderProgram> shaderProgram)
 		: m_Model(model), m_ShaderProgram(shaderProgram)
 	{}
