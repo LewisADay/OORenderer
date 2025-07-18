@@ -108,9 +108,6 @@ int main()
 
 	while (!window1.ShouldClose() && !window2.ShouldClose()) {
 
-		float timeValue = glfwGetTime();
-		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-
 		window1.ActivateWindow();
 
 		glBindTexture(GL_TEXTURE_2D, texture1.GetTextureID());

@@ -47,6 +47,12 @@ namespace OORenderer {
 		/// </summary>
 		void UseProgram();
 
+		/// <summary>
+		/// Get the GLFW context this shader program is bound to
+		/// </summary>
+		/// <returns>Pointer to the GLFW window this shader program is bound to</returns>
+		GLFWwindow* GetGLFWWindow() const;
+
 
 		// These uniforms call the OpenGL uniform equivalents arrays of vectors and matrices are not currently supported
 		// that is, OpenGL count values are hardcoded. E.g. SetUniformMatrix4fv assumes only 1 matrix is being set.
@@ -93,9 +99,9 @@ namespace OORenderer {
 		void SetUniformMatrix4x3fv(const GLchar* uniformName, const float* value, const bool transpose = false);
 
 		// glm type overloads
-		void SetUniform2fv(const GLchar* uniformName, const glm::vec2* value);
-		void SetUniform3fv(const GLchar* uniformName, const glm::vec3* value);
-		void SetUniform4fv(const GLchar* uniformName, const glm::vec4* value);
+		void SetUniform2fv(const GLchar* uniformName, const glm::vec2& value);
+		void SetUniform3fv(const GLchar* uniformName, const glm::vec3& value);
+		void SetUniform4fv(const GLchar* uniformName, const glm::vec4& value);
 
 		void SetUniformMatrix2fv(const GLchar* uniformName, const glm::mat2& value, const bool transpose = false);
 		void SetUniformMatrix3fv(const GLchar* uniformName, const glm::mat3& value, const bool transpose = false);

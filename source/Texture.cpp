@@ -8,9 +8,79 @@
 
 namespace OORenderer {
 
-	Texture::Texture(const Window& window)
-		: m_Window(window.GetGLFWWindow())
+	Texture::Texture(std::filesystem::path texturePath)
 	{
+		LoadTexture(texturePath);
+	}
+
+	Texture::Texture(const char* texturePath)
+		: Texture(std::filesystem::path{ texturePath })
+	{ }
+
+	Texture::Texture(GLFWwindow* window)
+	{
+		BindToWindow(window);
+	}
+
+	Texture::Texture(GLFWwindow* window, std::filesystem::path texturePath)
+	{
+		BindToWindow(window);
+		LoadTexture(texturePath);
+	}
+
+	Texture::Texture(GLFWwindow* window, const char* texturePath)
+		: Texture(window, std::filesystem::path{ texturePath })
+	{ }
+
+	Texture::Texture(const Window& window)
+		: Texture(window.GetGLFWWindow())
+	{ }
+
+	Texture::Texture(const Window& window, std::filesystem::path texturePath)
+		: Texture(window.GetGLFWWindow(), texturePath)
+	{ }
+
+	Texture::Texture(const Window& window, const char* texturePath)
+		: Texture(window, std::filesystem::path{texturePath})
+	{ }
+
+	Texture::~Texture() {
+		if (m_RawData) {
+			stbi_image_free(m_RawData);
+		}
+	}
+
+	unsigned int Texture::GetTextureID() {
+		return m_TextureID;
+	}
+
+	void Texture::LoadTexture(std::filesystem::path texturePath, const bool flip) {
+
+		// Needs improvement, this method I think only works for jpg/jpeg formats
+		// TODO Investigate
+		stbi_set_flip_vertically_on_load(flip);
+		m_RawData = stbi_load(texturePath.string().c_str(), &m_Width, &m_Height, &m_NumChannels, 0);
+
+		if (!m_RawData) {
+			std::cerr << "Error loading texture" << std::endl; // TODO LOGGING
+			return;
+		}
+
+		BindTexture();
+
+		if (m_Window) {
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_RawData);
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+
+		UnbindTexture();
+
+		m_TextureFilePath = texturePath;
+	}
+
+	void Texture::BindToWindow(GLFWwindow* window) {
+		m_Window = window;
+
 		m_OldContext = glfwGetCurrentContext();
 		Window::ActivateGLFWWindow(m_Window);
 
@@ -24,46 +94,15 @@ namespace OORenderer {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_TextureFilteringMag);
 		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, m_BorderColour.data());
 
+		// If we have data already loaded, push to this context
+		if (m_RawData) {
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_RawData);
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+
 		glBindTexture(GL_TEXTURE_2D, NULL);
 
 		Window::ActivateGLFWWindow(m_OldContext);
-	}
-
-	Texture::Texture(const Window& window, std::filesystem::path texturePath)
-		: Texture(window)
-	{
-		LoadTexture(texturePath);
-	}
-
-	Texture::Texture(const Window& window, const char* texturePath)
-		: Texture(window, std::filesystem::path{texturePath})
-	{ }
-
-	Texture::~Texture() {
-	}
-
-	unsigned int Texture::GetTextureID() {
-		return m_TextureID;
-	}
-
-	void Texture::LoadTexture(std::filesystem::path texturePath) {
-		// Needs improvement, this method I think only works for jpg/jpeg formats
-		// TODO Investigate
-		m_RawData = stbi_load(texturePath.string().c_str(), &m_Width, &m_Height, &m_NumChannels, 0);
-
-		if (!m_RawData) {
-			std::cerr << "Error loading texture" << std::endl; // TODO LOGGING
-			return;
-		}
-
-		BindTexture();
-
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, m_Width, m_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, m_RawData);
-		glGenerateMipmap(GL_TEXTURE_2D);
-
-		UnbindTexture();
-
-		stbi_image_free(m_RawData);
 	}
 
 	void Texture::SetTextureWrapMode(GLint mode) {
@@ -75,7 +114,10 @@ namespace OORenderer {
 		BindTexture();
 
 		m_TextureWrapS = mode;
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_TextureWrapS);
+
+		if (m_Window) {
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_TextureWrapS);
+		}
 
 		UnbindTexture();
 	}
@@ -84,7 +126,10 @@ namespace OORenderer {
 		BindTexture();
 
 		m_TextureWrapT = mode;
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_TextureWrapT);
+
+		if (m_Window) {
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_TextureWrapT);
+		}
 
 		UnbindTexture();
 	}
@@ -93,18 +138,33 @@ namespace OORenderer {
 		BindTexture();
 
 		m_BorderColour = colour;
-		glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, m_BorderColour.data());
+
+		if (m_Window) {
+			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, m_BorderColour.data());
+		}
 
 		UnbindTexture();
 	}
 
+	std::filesystem::path Texture::GetTexturePath() const {
+		return m_TextureFilePath;
+	}
+
 	void Texture::BindTexture() {
+		if (!m_Window) {
+			return;
+		}
+
 		m_OldContext = glfwGetCurrentContext();
 		Window::ActivateGLFWWindow(m_Window);
 		glBindTexture(GL_TEXTURE_2D, m_TextureID);
 	}
 
 	void Texture::UnbindTexture() {
+		if (!m_Window) {
+			return;
+		}
+
 		glBindTexture(GL_TEXTURE_2D, NULL);
 		Window::ActivateGLFWWindow(m_OldContext);
 	}

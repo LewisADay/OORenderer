@@ -139,9 +139,9 @@ namespace OORenderer {
 		GLFWframebuffersizefun m_ExternFramebufferResizeCallback;
 
 	private: // Friends
-		friend static void StaticFramebufferSizeCallback(GLFWwindow* window, int width, int height);
-		friend static void StaticFocusCallback(GLFWwindow* window, int focused);
-		friend static void StaticKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
+		friend void StaticFramebufferSizeCallback(GLFWwindow* window, int width, int height);
+		friend void StaticFocusCallback(GLFWwindow* window, int focused);
+		friend void StaticKeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	};
 
 } // OORenderer

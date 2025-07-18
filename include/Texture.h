@@ -14,6 +14,12 @@ namespace OORenderer {
 	/// </summary>
 	class Texture {
 	public:
+		Texture();
+		Texture(std::filesystem::path texturePath);
+		Texture(const char* texturePath);
+		Texture(GLFWwindow* window);
+		Texture(GLFWwindow* window, std::filesystem::path texturePath);
+		Texture(GLFWwindow* window, const char* texturePath);
 		Texture(const Window& window);
 		Texture(const Window& window, std::filesystem::path texturePath);
 		Texture(const Window& window, const char* texturePath);
@@ -29,7 +35,11 @@ namespace OORenderer {
 		/// Load the texture at the given path into this object
 		/// </summary>
 		/// <param name="texturePath">Path to texture to load</param>
-		void LoadTexture(std::filesystem::path texturePath);
+		/// <param name="flip">Flip the source image on load. Default: true</param>
+		void LoadTexture(std::filesystem::path texturePath, const bool flip = true);
+
+		void BindToWindow(const Window& window);
+		void BindToWindow(GLFWwindow* window);
 
 		/// <summary>
 		/// Set the texture wrap mode (for both s and t)
@@ -55,15 +65,22 @@ namespace OORenderer {
 		/// <param name="colour">Colour to use as a border colour</param>
 		void SetBorderColour(std::array<float, 4> colour);
 
+		/// <summary>
+		/// Get the path the loaded texture was originally found at - used for uniqueness checking
+		/// </summary>
+		/// <returns>Texture file path on disk</returns>
+		std::filesystem::path GetTexturePath() const;
+
 	private: // Private methods
 		void BindTexture();
 		void UnbindTexture();
 
 	private: // Private members
-		GLFWwindow* m_Window;
-		GLFWwindow* m_OldContext;
-		unsigned int m_TextureID;
+		GLFWwindow* m_Window = nullptr;
+		GLFWwindow* m_OldContext = nullptr;
+		unsigned int m_TextureID = 0;
 
+		std::filesystem::path m_TextureFilePath{};
 		unsigned char* m_RawData = nullptr;
 		int m_Width = 0;
 		int m_Height = 0;

@@ -9,6 +9,9 @@ target_sources(${PROJECT_NAME} PRIVATE
 	"ShaderProgram_Uniforms.cpp"
 	"Texture.cpp"
 	"Camera.cpp"
+	"Mesh.cpp"
+	"Model.cpp"
+	"RenderObject.cpp"
 )
 
 target_include_directories(${PROJECT_NAME} PRIVATE

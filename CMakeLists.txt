@@ -13,6 +13,7 @@ project(${PROJECT_NAME})
 add_library(${PROJECT_NAME})
 
 add_subdirectory("source")
+add_subdirectory("include")
 add_subdirectory("vendor")
 
 set(BUILD_EXAMPLES ON)

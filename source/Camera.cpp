@@ -16,6 +16,7 @@ namespace OORenderer {
 	}
 
 	void Camera::RecalculateMatrices() {
+		// TODO                      \/
 		// Get updated projection - should probably only do on resize callback but we do in all cases for now
 		int windowWidth = 0;
 		int windowHeight = 0;
@@ -48,6 +49,22 @@ namespace OORenderer {
 
 	void Camera::Move(glm::vec3 displacement) {
 		m_Position += displacement;
+	}
+
+	void Camera::MoveForward(float distance) {
+		Move(distance * m_Direction);
+	}
+
+	void Camera::MoveBackward(float distance) {
+		MoveForward(-distance);
+	}
+
+	void Camera::MoveLeft(float distance) {
+		Move(distance * glm::cross(m_CameraUp, m_Direction));
+	}
+
+	void Camera::MoveRight(float distance) {
+		MoveLeft(-distance);
 	}
 
 	void Camera::SetProjectionOrthographic(float left, float right, float bottom, float top, float near, float far) {
