@@ -68,11 +68,14 @@ int main() {
 		glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 		window2.UpdateDisplay();
+
+		glfwPollEvents();
 	}
 }
 ```
 
-Now we should have two windows of differing colours.
+Now we should have two windows of differing colours. Like so
+![Two windows side by side, one red, one blue.](/misc/READMEResources/SimpleDualWindow.png)
 
 ### Shaders
 
