@@ -2,7 +2,7 @@
 #include "Mesh.h"
 
 #include <iostream>
-#include <LoggingAD.h>
+#include <LoggingAD/LoggingAD.h>
 
 #include "Renderer.h"
 #include "Window.h"

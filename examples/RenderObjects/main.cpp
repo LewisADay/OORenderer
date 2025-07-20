@@ -3,7 +3,7 @@
 #include <random>
 #include <ctime>
 
-#include <LoggingAD.h>
+#include <LoggingAD/LoggingAD.h>
 
 #include "Camera.h"
 #include "RenderObject.h"

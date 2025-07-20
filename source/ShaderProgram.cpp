@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <fstream>
-#include <LoggingAD.h>
+#include <LoggingAD/LoggingAD.h>
 
 namespace OORenderer {
 

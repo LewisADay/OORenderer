@@ -2,7 +2,7 @@
 #include "Window.h"
 
 #include <iostream>
-#include <LoggingAD.h>
+#include <LoggingAD/LoggingAD.h>
 
 namespace OORenderer {
 

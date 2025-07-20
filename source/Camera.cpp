@@ -2,7 +2,7 @@
 #include "Camera.h"
 
 #include <glm/glm.hpp>
-#include <LoggingAD.h>
+#include <LoggingAD/LoggingAD.h>
 
 namespace OORenderer {
 
