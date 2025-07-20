@@ -41,6 +41,8 @@ endif()
 add_subdirectory("assimp")
 target_link_libraries(${PROJECT_NAME} PUBLIC "assimp::assimp")
 
+# LoggingAD
+# N.B: To disable entirely set compile time flag LOGGING_AD_DISABLE, for example on dist builds
 set(LOGGINGAD_DIR "LoggingAD")
 set(LOGGINGAD_DIR "${VENDOR_DIR}/${LOGGINGAD_DIR}" PARENT_SCOPE)
 add_subdirectory(${LOGGINGAD_DIR})
