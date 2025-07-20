@@ -1,6 +1,6 @@
 
-#include "ShaderProgram.h"
-#include "Renderer.h"
+#include "OORenderer/ShaderProgram.h"
+#include "OORenderer/Renderer.h"
 
 #include <iostream>
 #include <fstream>

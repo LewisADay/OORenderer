@@ -1,11 +1,11 @@
 
-#include "Mesh.h"
+#include "OORenderer/Mesh.h"
 
 #include <iostream>
 #include <LoggingAD/LoggingAD.h>
 
-#include "Renderer.h"
-#include "Window.h"
+#include "OORenderer/Renderer.h"
+#include "OORenderer/Window.h"
 
 namespace OORenderer {
 
