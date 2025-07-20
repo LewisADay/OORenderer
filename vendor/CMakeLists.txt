@@ -20,23 +20,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC "stb_image")
 # GLM
 target_include_directories(${PROJECT_NAME} PUBLIC "glm-1.0.1")
 
-# Submodules
-# Ensure submodules are up to date
-find_package(Git QUIET)
-if(GIT_FOUND AND EXISTS "${PROJECT_SOURCE_DIR}/.git")
-# Update submodules as needed
-    option(GIT_SUBMODULE "Check submodules during build" ON)
-    if(GIT_SUBMODULE)
-        message(STATUS "Submodule update")
-        execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive
-                        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-                        RESULT_VARIABLE GIT_SUBMOD_RESULT)
-        if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-            message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-        endif()
-    endif()
-endif()
 
+# Submodules #
 # ASSIMP
 add_subdirectory("assimp")
 target_link_libraries(${PROJECT_NAME} PUBLIC "assimp::assimp")
@@ -45,6 +30,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC "assimp::assimp")
 # N.B: To disable entirely set compile time flag LOGGING_AD_DISABLE, for example on dist builds
 set(LOGGINGAD_DIR "LoggingAD")
 set(LOGGINGAD_DIR "${VENDOR_DIR}/${LOGGINGAD_DIR}" PARENT_SCOPE)
+set(LOGGINGAD_BUILD_EXAMPLES OFF)
 add_subdirectory(${LOGGINGAD_DIR})
 target_link_libraries(${PROJECT_NAME} PUBLIC ${LOGGINGAD_LIBRARY_NAME})
 target_include_directories(${PROJECT_NAME} PUBLIC ${LOGGINGAD_INCLUDE_DIR})

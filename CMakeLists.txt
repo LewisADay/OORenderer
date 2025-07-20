@@ -16,8 +16,9 @@ add_subdirectory("source")
 add_subdirectory("include")
 add_subdirectory("vendor")
 
-set(BUILD_EXAMPLES ON)
+# As cache so it may be nicely overridden by a parent CMake scope
+set(OORENDERER_BUILD_EXAMPLES ON CACHE bool "Should we build OORenderer's examples?")
 
-if (BUILD_EXAMPLES)
+if (OORENDERER_BUILD_EXAMPLES)
 	add_subdirectory("examples")
 endif()
