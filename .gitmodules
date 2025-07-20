@@ -1,3 +1,6 @@
 [submodule "vendor/LoggingAD"]
 	path = vendor/LoggingAD
 	url = https://github.com/LewisADay/LoggingAD.git
+[submodule "vendor/assimp"]
+	path = vendor/assimp
+	url = https://github.com/assimp/assimp.git
