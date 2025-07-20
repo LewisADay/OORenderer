@@ -32,7 +32,7 @@ protected:
 private: // Private methods
 	void Start() {
 
-		// Enable trace level logging as an example of how to effect logging in OORenderer
+		// Enable trace level logging as an example of how to affect logging in OORenderer
 		LoggingAD::LoggingConfig config = {
 			.OutputLevel = LoggingAD::LogLevel::Trace
 		};
