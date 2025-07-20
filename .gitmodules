@@ -1,0 +1,3 @@
+[submodule "vendor/LoggingAD"]
+	path = vendor/LoggingAD
+	url = https://github.com/LewisADay/LoggingAD.git
