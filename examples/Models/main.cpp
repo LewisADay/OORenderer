@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-#include <Renderer.h>
-#include <Window.h>
-#include <ShaderProgram.h>
-#include <Camera.h>
-#include <Model.h>
+#include <OORenderer/Renderer.h>
+#include <OORenderer/Window.h>
+#include <OORenderer/ShaderProgram.h>
+#include <OORenderer/Camera.h>
+#include <OORenderer/Model.h>
 
 void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 	std::cout << "Window " << window << " pressed key " << key;

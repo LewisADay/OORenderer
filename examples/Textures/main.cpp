@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-#include <Renderer.h>
-#include <Window.h>
-#include <ShaderProgram.h>
-#include <Texture.h>
+#include <OORenderer/Renderer.h>
+#include <OORenderer/Window.h>
+#include <OORenderer/ShaderProgram.h>
+#include <OORenderer/Texture.h>
 
 
 void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {

@@ -5,8 +5,8 @@
 
 #include <LoggingAD/LoggingAD.h>
 
-#include "Camera.h"
-#include "RenderObject.h"
+#include "OORenderer/Camera.h"
+#include "OORenderer/RenderObject.h"
 
 class Application {
 public: // Public methods
