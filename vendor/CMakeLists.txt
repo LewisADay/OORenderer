@@ -21,5 +21,5 @@ target_include_directories(${PROJECT_NAME} PUBLIC "stb_image")
 target_include_directories(${PROJECT_NAME} PUBLIC "glm-1.0.1")
 
 # ASSIMP
-add_subdirectory("assimp-6.0.2")
+add_subdirectory("assimp")
 target_link_libraries(${PROJECT_NAME} PUBLIC "assimp::assimp")
