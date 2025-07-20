@@ -2,6 +2,7 @@
 #include "Mesh.h"
 
 #include <iostream>
+#include <LoggingAD.h>
 
 #include "Renderer.h"
 #include "Window.h"
@@ -24,8 +25,7 @@ namespace OORenderer {
 
         auto VAOIDIt = m_WindowVAOIDMap.find(renderWindow);
         if (VAOIDIt == m_WindowVAOIDMap.end()) {
-            // TODO Logging
-            std::cerr << "Attempting to render mesh using shader registered to a window this mesh hasn't been loaded to." << std::endl;
+            LoggingAD::Warning("[OORenderer::Mesh::Render] Attempting to render mesh using shader registered to a window this mesh hasn't been loaded to.");
             return;
         }
 

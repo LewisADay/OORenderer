@@ -3,6 +3,8 @@
 #include <random>
 #include <ctime>
 
+#include <LoggingAD.h>
+
 #include "Camera.h"
 #include "RenderObject.h"
 
@@ -29,6 +31,13 @@ protected:
 
 private: // Private methods
 	void Start() {
+
+		// Enable trace level logging as an example of how to effect logging in OORenderer
+		LoggingAD::LoggingConfig config = {
+			.OutputLevel = LoggingAD::LogLevel::Trace
+		};
+		LoggingAD::SetConfig(config);
+
 		std::filesystem::path modelPath{ "./resources/models/backpack/backpack.obj" };
 		std::filesystem::path shadersPath{ "./resources/shaders/models" };
 		std::string vertexShader = "vertShader.vs";

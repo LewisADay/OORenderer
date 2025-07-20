@@ -1,5 +1,6 @@
 
 #include "RenderObject.h"
+#include <LoggingAD.h>
 
 namespace OORenderer {
 
@@ -19,12 +20,14 @@ namespace OORenderer {
 	}
 
 	void RenderObject::LoadModel(std::filesystem::path filePath) {
+		LoggingAD::Trace("[OORenderer::RenderObject::LoadModel] Loading model from path: {}", filePath.string());
 		auto alreadyLoadedIt = sm_LoadedModels.find(filePath);
 		if (alreadyLoadedIt == sm_LoadedModels.end()) {
 			m_Model = std::make_shared<Model>(filePath);
 			sm_LoadedModels[filePath] = m_Model;
 		}
 		else {
+			LoggingAD::Trace("[OORenderer::RenderObject::LoadModel] Model already loaded, loading from cache.");
 			m_Model = sm_LoadedModels[filePath];
 		}
 	}

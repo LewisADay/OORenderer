@@ -2,6 +2,7 @@
 #include "Texture.h"
 
 #include <iostream>
+#include <LoggingAD.h>
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
@@ -56,13 +57,15 @@ namespace OORenderer {
 
 	void Texture::LoadTexture(std::filesystem::path texturePath, const bool flip) {
 
+		LoggingAD::Trace("[OORenderer::Texture::Load] Loading texture from path: {}", texturePath.string());
+
 		// Needs improvement, this method I think only works for jpg/jpeg formats
 		// TODO Investigate
 		stbi_set_flip_vertically_on_load(flip);
 		m_RawData = stbi_load(texturePath.string().c_str(), &m_Width, &m_Height, &m_NumChannels, 0);
 
 		if (!m_RawData) {
-			std::cerr << "Error loading texture" << std::endl; // TODO LOGGING
+			LoggingAD::Error("[OORenderer::Texture::Load] Error loading texture from path: {}", texturePath.string());
 			return;
 		}
 

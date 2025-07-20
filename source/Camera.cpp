@@ -2,12 +2,14 @@
 #include "Camera.h"
 
 #include <glm/glm.hpp>
+#include <LoggingAD.h>
 
 namespace OORenderer {
 
 	Camera::Camera(glm::vec3 position, glm::vec3 direction)
 		: m_CameraUp(ms_WorldSpaceUp)
 	{
+		LoggingAD::Trace("Creating camera.");
 		int windowWidth = 0;
 		int windowHeight = 0;
 		glfwGetFramebufferSize(glfwGetCurrentContext(), &windowWidth, &windowHeight);

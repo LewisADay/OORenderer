@@ -3,6 +3,7 @@
 #include <iostream>
 #include <ranges>
 #include <algorithm>
+#include <LoggingAD.h>
 
 namespace OORenderer {
 
@@ -45,12 +46,14 @@ namespace OORenderer {
 	}
 
 	void Model::LoadFromPath(std::filesystem::path path) {
+		LoggingAD::Trace("[OORenderer::Model::Load] Loading model from path: {}", path.string());
+
 		Assimp::Importer import;
 
 		const aiScene* scene = import.ReadFile(path.string(), aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-			std::cerr << "ERROR::ASSIMP::" << import.GetErrorString() << std::endl;
+			LoggingAD::Error("[OORenderer::Model::Load::assimp] Assimp error when loading model from path: {}. Error string: {}", path.string(), import.GetErrorString());
 			return;
 		}
 		m_ModelDirectory = path.parent_path();
@@ -124,8 +127,7 @@ namespace OORenderer {
 			}
 
 			if (!std::filesystem::exists(texturePath)) {
-				// TODO LOGGING
-				std::cerr << "Failure to load texture at path " << texturePath << ". File not found." << std::endl;
+				LoggingAD::Warning("[OORenderer::Model::Texture] Failure to load texture at path {}. File not found.", texturePath.string());
 				continue;
 			}
 

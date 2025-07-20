@@ -2,6 +2,7 @@
 #include "Window.h"
 
 #include <iostream>
+#include <LoggingAD.h>
 
 namespace OORenderer {
 
@@ -9,8 +10,8 @@ namespace OORenderer {
 
 	static Window* StaticGetUserOfGLFWWindow(GLFWwindow* window) {
 		Window* user = static_cast<Window*>(glfwGetWindowUserPointer(window));
-		if (user == NULL) {
-			// TODO LOGGING
+		if (user == nullptr) {
+			LoggingAD::Error("[OORenderer::Window::Utils] Attempting to fetch user of GLFW window and none found!");
 			return nullptr;
 		}
 		return user;
@@ -46,13 +47,15 @@ namespace OORenderer {
 		bool setToCurrent
 	)
 	{
+		LoggingAD::Trace("Creating window with title: {}.", title);
+
 		// Keep track of how many windows we have open 
 		++s_NumWindows;
 
 		// Init glfw (does nothing if alreay initialised)
 		if (glfwInit() != GLFW_TRUE) {
-			// TODO LOGGING
-			throw "GLFW Failed to initialise aborting!";
+			LoggingAD::Error("[OORenderer::Window::Init] GLFW Failed to initialise! Aborting.");
+			throw "[OORenderer::Window::Init] GLFW Failed to initialise aborting!";
 		}
 
 		// What sort of window do we want
@@ -61,6 +64,8 @@ namespace OORenderer {
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 		m_GLFWWindow = glfwCreateWindow(width, height, title.c_str(), monitor, share);
+
+		LoggingAD::Trace("Creating GLFW context for window with title: {}. GLFW Window: {:#010x}", title, reinterpret_cast<std::uintptr_t>(m_GLFWWindow));
 
 		// Keep members up to date
 		m_Width = width;
@@ -83,6 +88,9 @@ namespace OORenderer {
 	}
 
 	Window::~Window() {
+
+		LoggingAD::Trace("Destroying window {:#010x}", reinterpret_cast<std::uintptr_t>(m_GLFWWindow));
+
 		// Keep track of how many windows we have open
 		--s_NumWindows;
 
@@ -96,6 +104,9 @@ namespace OORenderer {
 	}
 
 	void Window::FramebufferSizeCallback(int width, int height) {
+
+		LoggingAD::Trace("Resizing window {:#010x}, to size ({}, {})", reinterpret_cast<std::uintptr_t>(m_GLFWWindow), width, height);
+
 		// Keep members up to date
 		m_Width = width;
 		m_Height = height;
@@ -112,11 +123,11 @@ namespace OORenderer {
 
 	void Window::FocusCallback(int focused) {
 		if (focused) {
-			std::cout << "Window gained focus: " << m_GLFWWindow << std::endl;
+			LoggingAD::Trace("[OORenderer::Window] Window gained focus: {:#010x}", reinterpret_cast<std::uintptr_t>(m_GLFWWindow));
 			ActivateWindow();
 		}
 		else {
-			std::cout << "Window lost focus: " << m_GLFWWindow << std::endl;
+			LoggingAD::Trace("[OORenderer::Window] Window lost focus: {:#010x}", reinterpret_cast<std::uintptr_t>(m_GLFWWindow));
 		}
 
 		if (m_ExternFocusCallback) {

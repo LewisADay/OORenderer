@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <LoggingAD.h>
 
 namespace OORenderer {
 
@@ -53,7 +54,8 @@ namespace OORenderer {
 		if (!success)
 		{
 			glGetShaderInfoLog(shaderID, 512, NULL, infoLog);
-			std::cerr << "ERROR::SHADER::" << shaderType << "::COMPILATION_FAILED\n" << infoLog << std::endl; // TODO LOGGING
+			LoggingAD::Error("[OORenderer::ShaderProgram::Compilation] Compilation failed of shader of type {}. With log: {}", shaderType, std::string(infoLog));
+			LoggingAD::Info("[OORenderer::ShaderProgram::Compilation] Compilation failed of shader with source: {}", std::string(shaderSource));
 			// Revert context
 			Window::ActivateGLFWWindow(oldContext);
 			return false;
@@ -71,7 +73,7 @@ namespace OORenderer {
 		// Get shader source
 		std::ifstream shaderFile(shaderPath, std::ios::in);
 		if (!shaderFile.is_open()) {
-			std::cerr << "Could not find shader at path: " + shaderPath.string() + "." << std::endl; // TODO LOGGING
+			LoggingAD::Error("[OORenderer::ShaderProgram::Load] Failed to load shader at path: {}", shaderPath.string());
 			return false;
 		}
 		std::string fileContents(std::filesystem::file_size(shaderPath), '\0');
@@ -86,9 +88,9 @@ namespace OORenderer {
 		GLFWwindow* oldContext = glfwGetCurrentContext();
 		Window::ActivateGLFWWindow(m_Window);
 
-		for (auto& [type, id] : m_RegisteredShaders) {
+		for (auto [type, id] : m_RegisteredShaders) {
 			glAttachShader(m_ProgramID, id);
-			std::cout << "Attaching shader of type: " << type << " with ID: " << id << std::endl; // TODO LOGGING
+			LoggingAD::Trace("[OORenderer::ShaderProgram::Linking] Attaching shader of type: {} with ID: {} to window: {:#010x}", type, id, reinterpret_cast<std::uintptr_t>(m_Window));
 		}
 
 		glLinkProgram(m_ProgramID);
@@ -98,7 +100,7 @@ namespace OORenderer {
 		glGetProgramiv(m_ProgramID, GL_LINK_STATUS, &success);
 		if (!success) {
 			glGetProgramInfoLog(m_ProgramID, 512, NULL, infoLog);
-			std::cerr << "ERROR::SHADERPROGRAM::" << m_ProgramID << "::LINKING_FAILED\n" << infoLog << std::endl; // TODO LOGGING
+			LoggingAD::Error("[OORenderer::ShaderProgram::Linking] Linking shader program with id {} to window {:#010x} failed. With log: {}", m_ProgramID, reinterpret_cast<std::uintptr_t>(m_Window), std::string(infoLog));
 		}
 
 		// Shaders have been used no need to hold onto them
