@@ -7,8 +7,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Renderer.h"
-#include "Window.h"
+#include "OORenderer/Renderer.h"
+#include "OORenderer/Window.h"
 
 
 namespace OORenderer {

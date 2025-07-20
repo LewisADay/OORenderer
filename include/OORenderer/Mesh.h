@@ -6,8 +6,8 @@
 
 #include <glm/glm.hpp>
 
-#include "ShaderProgram.h"
-#include "Texture.h"
+#include "OORenderer/ShaderProgram.h"
+#include "OORenderer/Texture.h"
 
 namespace OORenderer {
 

@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "ShaderProgram.h"
-#include "Model.h"
+#include "OORenderer/ShaderProgram.h"
+#include "OORenderer/Model.h"
 
 namespace OORenderer {
 

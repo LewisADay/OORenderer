@@ -4,6 +4,7 @@
 #include <ctime>
 
 #include <LoggingAD/LoggingAD.h>
+#include <LoggingAD/ScopedTimer.h>
 
 #include "OORenderer/Camera.h"
 #include "OORenderer/RenderObject.h"
@@ -19,6 +20,7 @@ public: // Public methods
 		Start();
 
 		while (!m_ShouldQuit) {
+			LoggingAD::ScopedTimer("Frametimer", LoggingAD::LogLevel::Trace);
 			PerFrame();
 		}
 

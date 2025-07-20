@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Renderer.h"
+#include "OORenderer/Renderer.h"
 
 #include <filesystem>
 #include <array>
 
-#include <Window.h>
+#include <OORenderer/Window.h>
 
 namespace OORenderer {
 

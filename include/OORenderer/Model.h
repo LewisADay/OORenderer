@@ -7,9 +7,9 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "ShaderProgram.h"
-#include "Mesh.h"
-#include "Texture.h"
+#include "OORenderer/ShaderProgram.h"
+#include "OORenderer/Mesh.h"
+#include "OORenderer/Texture.h"
 
 namespace OORenderer {
 
