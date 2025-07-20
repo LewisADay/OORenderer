@@ -4,4 +4,3 @@
 [submodule "vendor/assimp"]
 	path = vendor/assimp
 	url = https://github.com/assimp/assimp.git
-	tag = v6.0.2
