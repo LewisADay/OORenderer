@@ -117,7 +117,7 @@ namespace OORenderer {
 		glViewport(0, 0, width, height);
 
 		if (m_ExternFramebufferResizeCallback) {
-			m_ExternFramebufferResizeCallback(m_GLFWWindow, width, height); // TODO Should be std::invoke? Investigate.
+			std::invoke(m_ExternFramebufferResizeCallback, m_GLFWWindow, width, height);
 		}
 	}
 
@@ -131,7 +131,7 @@ namespace OORenderer {
 		}
 
 		if (m_ExternFocusCallback) {
-			m_ExternFocusCallback(m_GLFWWindow, focused); // TODO Should be std::invoke? Investigate.
+			std::invoke(m_ExternFocusCallback, m_GLFWWindow, focused);
 		}
 	}
 
@@ -161,7 +161,7 @@ namespace OORenderer {
 		}
 
 		if (m_ExternKeyCallback) {
-			m_ExternKeyCallback(m_GLFWWindow, key, scancode, action, mods); // TODO Should be std::invoke? Investigate.
+			std::invoke(m_ExternKeyCallback, m_GLFWWindow, key, scancode, action, mods);
 		}
 	}
 
