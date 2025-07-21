@@ -20,7 +20,7 @@ public: // Public methods
 		Start();
 
 		while (!m_ShouldQuit) {
-			LoggingAD::ScopedTimer("Frametimer", LoggingAD::LogLevel::Trace);
+			LoggingAD::ScopedTimer timer ("Frametimer", LoggingAD::LogLevel::Trace);
 			PerFrame();
 		}
 
