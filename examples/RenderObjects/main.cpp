@@ -28,7 +28,7 @@ public: // Public methods
 
 protected:
 	static void InputCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-		std::cout << "Window " << window << " pressed key " << key;
+		std::cout << "Window " << window << " pressed key " << key << std::endl;
 	}
 
 private: // Private methods
