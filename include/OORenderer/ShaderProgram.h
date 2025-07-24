@@ -15,8 +15,21 @@ namespace OORenderer {
 
 	class ShaderProgram {
 	public:
+
+		/// <summary>
+		/// Construct a shader program for the given window
+		/// </summary>
+		/// <param name="window">Window to register shader program to</param>
 		ShaderProgram(const Window& window);
+				
+		/// <summary>
+		/// Construct a shader program for the given window with two stages, vertex and fragment
+		/// </summary>
+		/// <param name="window">Window to register shader program to</param>
+		/// <param name="vertexShaderPath">Path to vertex shader source</param>
+		/// <param name="fragmentShaderPath">Path to fragment shader source</param>
 		ShaderProgram(const Window& window, std::filesystem::path vertexShaderPath, std::filesystem::path fragmentShaderPath);
+
 		~ShaderProgram();
 
 		/// <summary>
@@ -99,6 +112,7 @@ namespace OORenderer {
 		void SetUniformMatrix4x3fv(const GLchar* uniformName, const float* value, const bool transpose = false);
 
 		// glm type overloads
+
 		void SetUniform2fv(const GLchar* uniformName, const glm::vec2& value);
 		void SetUniform3fv(const GLchar* uniformName, const glm::vec3& value);
 		void SetUniform4fv(const GLchar* uniformName, const glm::vec4& value);

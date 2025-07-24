@@ -15,6 +15,11 @@ namespace OORenderer {
 
 	class Model {
 	public: // Public Methods
+
+		/// <summary>
+		/// Construct a model by loaded the model at the given path
+		/// </summary>
+		/// <param name="path">Path to model file</param>
 		Model(std::filesystem::path path);
 
 		/// <summary>
@@ -46,7 +51,7 @@ namespace OORenderer {
 		static bool TextureAlreadyLoaded(std::filesystem::path path);
 
 	private: // Private Static Members
-		static std::vector<std::shared_ptr<Texture>> sm_LoadedTextures; // Prevent duplicate loading of textures
+		inline static std::vector<std::shared_ptr<Texture>> sm_LoadedTextures = {}; // Prevent duplicate loading of textures
 
 	private: // Private Members
 		std::vector<Mesh> m_Meshes;

@@ -10,7 +10,7 @@
 namespace OORenderer {
 
 	/// <summary>
-	/// 2D Texture class
+	/// 2D Texture class, Textures can only be bound to 1 window at a time
 	/// </summary>
 	class Texture {
 	public:
@@ -38,7 +38,16 @@ namespace OORenderer {
 		/// <param name="flip">Flip the source image on load. Default: true</param>
 		void LoadTexture(std::filesystem::path texturePath, const bool flip = true);
 
+		/// <summary>
+		/// Bind this shader to a given GLFWwindow context
+		/// </summary>
+		/// <param name="window"></param>
 		void BindToWindow(const Window& window);
+
+		/// <summary>
+		/// Bind this shader to a given Window context
+		/// </summary>
+		/// <param name="window"></param>
 		void BindToWindow(GLFWwindow* window);
 
 		/// <summary>

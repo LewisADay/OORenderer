@@ -17,21 +17,86 @@ namespace OORenderer {
 		);
 
 		// Call before using any matrices from this camera after any changes
-		void RecalculateMatrices();
-		glm::mat4 GetProjectionMatrix();
-		glm::mat4 GetViewMatrix();
-		glm::mat4 GetPVMatrix();
 
+		/// <summary>
+		/// Recalculate the view and PV matrices.
+		/// Do this between changes to the camera e.g. after calling Move()
+		/// and using the camera matrices e.g. passing to a shaderprogram.
+		/// </summary>
+		void RecalculateMatrices();
+
+		/// <summary>
+		/// Retrieve this cameras projection matrix
+		/// </summary>
+		/// <returns>Projection matrix</returns>
+		glm::mat4 GetProjectionMatrix() const;
+
+		/// <summary>
+		/// Retrieve this cameras view matrix
+		/// </summary>
+		/// <returns>View matrix</returns>
+		glm::mat4 GetViewMatrix() const;
+
+		/// <summary>
+		/// Retrieve this cameras PV matrix (Projection * View)
+		/// </summary>
+		/// <returns>PV matrix</returns>
+		glm::mat4 GetPVMatrix() const;
+
+		/// <summary>
+		/// Turn camera to look at a point in world space
+		/// </summary>
+		/// <param name="position">Position to look at</param>
 		void LookAt(glm::vec3 position);
+		
+		/// <summary>
+		/// Move camera to point in world space
+		/// </summary>
+		/// <param name="position">Position to move to</param>
 		void MoveTo(glm::vec3 position);
+
+		/// <summary>
+		/// Move the camera
+		/// </summary>
+		/// <param name="displacement">Amount and direction to move the camera</param>
 		void Move(glm::vec3 displacement);
 
+		/// <summary>
+		/// Move the camera in the direction it is facing by some distance
+		/// </summary>
+		/// <param name="distance">Distance to move the camera</param>
 		void MoveForward(float distance);
+
+		/// <summary>
+		/// Move the camera in the opposite direction to the one it is facing by some distance
+		/// </summary>
+		/// <param name="distance">Distance to move the camera</param>
 		void MoveBackward(float distance);
+
+		/// <summary>
+		/// Move the camera in the direction to it's left by some distance
+		/// </summary>
+		/// <param name="distance">Distance to move the camera</param>
 		void MoveLeft(float distance);
+
+		/// <summary>
+		/// Move the camera in the direction to it's right by some distance
+		/// </summary>
+		/// <param name="distance">Distance to move the camera</param>
 		void MoveRight(float distance);
 
+		/// <summary>
+		/// Set the cameras projection matrix to orthographic with standard plane inputs
+		/// </summary>
 		void SetProjectionOrthographic(float left, float right, float bottom, float top, float near, float far);
+
+		/// <summary>
+		/// Set the cameras projection matrix to perspective with standard glm perspective inputs
+		/// </summary>
+		/// <param name="fovRads">Field of view in radians</param>
+		/// <param name="aspectRatio">Aspect ratio of display</param>
+		/// <param name="near">Distance to near plane</param>
+		/// <param name="far">Distance to far plane</param>
 		void SetProjectionPerspective(float fovRads, float aspectRatio, float near, float far);
 
 	private: // Private members

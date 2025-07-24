@@ -81,6 +81,10 @@ namespace OORenderer {
 		m_TextureFilePath = texturePath;
 	}
 
+	void Texture::BindToWindow(const Window& window) {
+		BindToWindow(window.GetGLFWWindow());
+	}
+
 	void Texture::BindToWindow(GLFWwindow* window) {
 		m_Window = window;
 

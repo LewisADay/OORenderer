@@ -7,9 +7,6 @@
 
 namespace OORenderer {
 
-	// Init static member variables
-	std::vector<std::shared_ptr<Texture>> Model::sm_LoadedTextures = {};
-
 	Model::Model(std::filesystem::path path) {
 		LoadFromPath(path);
 	}

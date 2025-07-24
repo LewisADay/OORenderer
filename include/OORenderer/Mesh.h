@@ -15,6 +15,9 @@ namespace OORenderer {
 
 	public: // Public objects
 
+		/// <summary>
+		/// Vertex data, this is the layout we pass to shaders
+		/// </summary>
 		struct Vertex {
 			glm::vec3 Position;
 			glm::vec3 Normal;

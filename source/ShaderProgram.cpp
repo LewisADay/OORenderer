@@ -26,9 +26,7 @@ namespace OORenderer {
 	}
 
 	ShaderProgram::~ShaderProgram() {
-		// Uncertain if this is necessary - seems to work without but this shouldn't be called too often
-		// (unless you're doing something odd in which case on your own head be it)
-		// Ensure we're on the correct context
+		// Ensure we delete the correct program on the correct context
 		GLFWwindow* oldContext = glfwGetCurrentContext();
 		Window::ActivateGLFWWindow(m_Window);
 

@@ -29,15 +29,15 @@ namespace OORenderer {
 		m_PVMatrix = m_ProjectionMatrix * m_ViewMatrix;
 	}
 
-	glm::mat4 Camera::GetProjectionMatrix() {
+	glm::mat4 Camera::GetProjectionMatrix() const {
 		return m_ProjectionMatrix;
 	}
 
-	glm::mat4 Camera::GetViewMatrix() {
+	glm::mat4 Camera::GetViewMatrix() const {
 		return m_ViewMatrix;
 	}
 
-	glm::mat4 Camera::GetPVMatrix() {
+	glm::mat4 Camera::GetPVMatrix() const {
 		return m_PVMatrix;
 	}
 
