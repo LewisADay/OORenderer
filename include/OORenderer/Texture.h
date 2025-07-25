@@ -1,9 +1,8 @@
 #pragma once
 
-#include "OORenderer/Renderer.h"
-
 #include <filesystem>
 #include <array>
+#include <glad/glad.h>
 
 #include <OORenderer/Window.h>
 

@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-#include <OORenderer/Renderer.h>
+#include <glad/glad.h>
+
 #include <OORenderer/Window.h>
 #include <OORenderer/ShaderProgram.h>
 #include <OORenderer/Camera.h>
@@ -46,9 +47,8 @@ int main()
 	// Setup camera - we use the same camera for both windows because that's an option
 	Camera camera1;
 
-	std::cout << "Begin loading model...\n";
+	// Load model
 	Model backpackModel{ modelPath };
-	std::cout << "End loading model.\n";
 
 	// Register the model for use on both windows
 	backpackModel.RegisterOnWindow(window1);

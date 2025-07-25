@@ -1,9 +1,10 @@
 
 #include "OORenderer/ShaderProgram.h"
-#include "OORenderer/Renderer.h"
 
 #include <iostream>
 #include <fstream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <LoggingAD/LoggingAD.h>
 
 namespace OORenderer {

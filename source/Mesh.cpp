@@ -2,9 +2,10 @@
 #include "OORenderer/Mesh.h"
 
 #include <iostream>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include <LoggingAD/LoggingAD.h>
 
-#include "OORenderer/Renderer.h"
 #include "OORenderer/Window.h"
 
 namespace OORenderer {

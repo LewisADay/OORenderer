@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-#include <OORenderer/Renderer.h>
+#include <glad/glad.h>
+
 #include <OORenderer/Window.h>
 #include <OORenderer/ShaderProgram.h>
 #include <OORenderer/Texture.h>

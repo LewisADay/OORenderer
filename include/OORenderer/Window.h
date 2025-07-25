@@ -1,7 +1,8 @@
 #pragma once
 
-#include "OORenderer/Renderer.h"
 #include <string>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace OORenderer {
 
